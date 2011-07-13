@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: StART SQL Wrapper
+Bundle-SymbolicName: de.chdev.artools.sql;singleton:=true
+Bundle-Version: 0.3.3.qualifier
+Bundle-Activator: de.chdev.artools.sql.Activator
+Bundle-Vendor: chdev
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.jface.text,
+ org.eclipse.ui.editors,
+ de.chdev.artools.reporter,
+ com.bmc.arsys.studio.ui,
+ com.bmc.arsys.studio.commonui,
+ com.bmc.arsys.studio.api,
+ com.bmc.arsys.studio.model,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
