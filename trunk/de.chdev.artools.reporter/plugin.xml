@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="de.chdev.artools.reporter.reporter" name="Reporter" schema="schema/de.chdev.artools.reporter.reporter.exsd"/>
+   <extension-point id="de.chdev.artools.reporter.exporter" name="Exporter" schema="schema/de.chdev.artools.reporter.exporter.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Studio AR Tools"
+            id="de.chdev.artools.category.main">
+      </category>
+      <view
+            allowMultiple="true"
+            category="de.chdev.artools.category.main"
+            class="de.chdev.artools.reporter.views.EscalationView"
+            icon="icons/k-timer-icon16x16.png"
+            id="de.chdev.artools.reporter.views.EscalationView"
+            name="TimeTable">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="de.chdev.ar.tools.views.EscalationView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="de.chdev.artools.toolbar">
+            <command
+                  commandId="de.chdev.artools.command.openEscalView"
+                  icon="icons/k-timer-icon16x16.png"
+                  label="Open Timetable View"
+                  style="push"
+                  tooltip="Opens a new timetable view">
+            </command>
+            <command
+                  commandId="de.chdev.artools.command.report"
+                  icon="icons/k-chart-icon-16x16.png"
+                  label="Create Report"
+                  style="push"
+                  tooltip="Creates a report for specific objects">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="de.chdev.artools.commands"
+            name="General Commands">
+      </category>
+      <command
+            categoryId="de.chdev.artools.commands"
+            defaultHandler="de.chdev.artools.reporter.handler.OpenEscalViewHandler"
+            id="de.chdev.artools.command.openEscalView"
+            name="Open Escalation View Command">
+      </command>
+      <command
+            categoryId="de.chdev.artools.commands"
+            defaultHandler="de.chdev.artools.reporter.handler.OpenReportHandler"
+            description="Creates a report for specific objects"
+            id="de.chdev.artools.command.report"
+            name="Object report">
+      </command>
+   </extension>
+   <extension
+         point="de.chdev.artools.reporter.exporter">
+      <exporter
+            class="de.chdev.artools.reporter.report.CSVExporter">
+      </exporter>
+      <exporter
+            class="de.chdev.artools.reporter.report.ScreenExporter">
+      </exporter>
+      <exporter
+            class="de.chdev.artools.reporter.report.ClipboardExporter">
+      </exporter>
+   </extension>
+   <extension
+         point="de.chdev.artools.reporter.reporter">
+      <reporter
+            class="de.chdev.artools.reporter.report.PackingListReporter">
+      </reporter>
+      <reporter
+            class="de.chdev.artools.reporter.report.FormCompareReporter">
+      </reporter>
+      <reporter
+            class="de.chdev.artools.reporter.report.TimeReporter">
+      </reporter>
+   </extension>
+
+</plugin>
