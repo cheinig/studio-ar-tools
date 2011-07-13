@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: StART Reporting
+Bundle-SymbolicName: de.chdev.artools.reporter;singleton:=true
+Bundle-Version: 0.3.3.qualifier
+Bundle-Activator: de.chdev.artools.reporter.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.navigator,
+ com.bmc.arsys.studio.ui,
+ com.bmc.arsys.studio.api,
+ com.bmc.arsys.studio.model,
+ com.bmc.arsys.studio.commonui
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: lib/opencsv-1.8.jar,
+ .
+Export-Package: de.chdev.artools.reporter.interfaces,
+ de.chdev.artools.reporter.report,
+ de.chdev.artools.reporter.utils
+Bundle-Vendor: chdev
