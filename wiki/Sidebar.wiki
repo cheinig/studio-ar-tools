@@ -1,6 +1,6 @@
 #summary Sidebar
 
-* [Welcome Welcome]
+ * [Welcome Welcome]
 * [Installation Installation]
 * [ User Guide]
   * [SQLPlugin SQL Plugin]
