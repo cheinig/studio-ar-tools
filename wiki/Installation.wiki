@@ -11,4 +11,4 @@ If you already installed a previous version of StART, you must remove the plugin
 
 To check if StART is installed correct, you should check if the StART toolbar is available. StART provides an own toolbar as starting point for the new features. 
 
-http://code.google.com/p/studio-ar-tools/images/start_toolbar.gif
+http://studio-ar-tools.googlecode.com/svn/wiki/images/Start_toolbar.gif
