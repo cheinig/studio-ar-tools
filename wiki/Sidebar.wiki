@@ -2,7 +2,7 @@
 
  * [Welcome Welcome]
  * [Installation Installation]
- test
+ * User Guide
   * [SQLPlugin SQL Plugin]
   * [ReportingPlugin Reporting Plugin]
   * [TimetablePlugin Timetable Plugin]
