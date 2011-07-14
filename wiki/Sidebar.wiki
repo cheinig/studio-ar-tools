@@ -6,3 +6,5 @@
   * [SQLPlugin SQL Plugin]
   * [ReportingPlugin Reporting Plugin]
   * [TimetablePlugin Timetable Plugin]
+
+ * [list list all pages]
