@@ -1,11 +1,7 @@
 #summary Sidebar
 
-=User Guide=
-  * [Welcome Welcome]
-    * [ArticlesXSS Web security]
-    * [ArticlesDom DOM manipulation]
-    * [ArticlesStyle CSS and style]
-    * [ArticlesTips Tips and tricks]
-  * [DOMReference DOM reference]
-  * [HTMLElements HTML reference]
-  * [CSSReference CSS reference]
+  * [Welcome User Guide]
+    * [sql SQL Plugin]
+    * [reporting Reporting Plugin]
+    * [timetable Timetable Plugin]
+  * [Installation Installation Guide]
