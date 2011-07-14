@@ -1,4 +1,4 @@
-#summary Welcome page for the StART Plugin
+#summary Welcome to the StART Plugin
 #labels Featured
 
 = Introduction =
