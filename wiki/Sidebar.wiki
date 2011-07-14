@@ -7,4 +7,4 @@
   * [ReportingPlugin Reporting Plugin]
   * [TimetablePlugin Timetable Plugin]
 -----
- * [http://code.google.com/p/studio-ar-tools/w/list list all pages]
+  *[http://code.google.com/p/studio-ar-tools/w/list list all pages]
