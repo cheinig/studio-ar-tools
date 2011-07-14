@@ -1,8 +1,8 @@
 #summary Sidebar
 
  * [Welcome Welcome]
-* [Installation Installation]
-* [ User Guide]
+ * [Installation Installation]
+ * [ User Guide]
   * [SQLPlugin SQL Plugin]
   * [ReportingPlugin Reporting Plugin]
   * [TimetablePlugin Timetable Plugin]
