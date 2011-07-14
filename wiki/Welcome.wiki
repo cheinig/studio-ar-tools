@@ -1,13 +1,8 @@
-#summary One-sentence summary of this page.
+#summary Welcome page for the StART Plugin
+#labels Featured
 
 = Introduction =
 
-Add your content here.
+StART is a collection of plugins for the BMC Remedy Developer Studio. They extend it with some functionality to make developers life easier.
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+This Wiki should help you to install and use the different plugins provided.
