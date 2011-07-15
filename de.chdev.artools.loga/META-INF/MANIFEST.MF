@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: StART Log Analyzer
+Bundle-SymbolicName: de.chdev.artools.loga; singleton:=true
+Bundle-Version: 0.4.0.qualifier
+Bundle-Activator: de.chdev.artools.loga.Activator
+Bundle-Vendor: chdev
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.core.resources,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.ide,
+ org.apache.commons.logging
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: lib/commons-configuration-1.3.jar,
+ .,
+ lib/commons-collections-3.2.jar,
+ lib/commons-lang-2.2.jar
