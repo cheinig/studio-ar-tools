@@ -5,4 +5,11 @@
 
 StART is a collection of plugins for the BMC Remedy Developer Studio. They extend it with some functionality to make developers life easier.
 
-This Wiki should help you to install and use the different plugins provided.
+This Wiki should help you to install and use the different plugin features provided.
+
+The following features are available at the moment:
+* [[SQLPlugin sql editor]]
+* [[ReportingPlugin report generator]]
+* [[TimetablePlugin timetable view]]
+
+For details see the different wiki pages.
