@@ -4,7 +4,7 @@
 The SQL plugin provides a small and simple SQL editor. This editor send SQL commands to the connected AR server which execute the statement on the database in the context of the AR server. No direct connection to the DBMS is necessary.<br />
 To open a SQL editor window, you select the correct servername from the DevStudio navigator and use the SQL Editor button in the toolbar. The opened SQL editor window is related to the previously selected servername (the servername is shown at the top of the editor window) and send all SQL commands to this server.
 
-http://studio-ar-tools.googlecode.com/svn/trunk/wiki/images/sqlplugin_sqleditor.gif
+http://code.google.com/p/studio-ar-tools/source/browse/wiki/images/sqlplugin_sqleditor.gif
 
 Figure "SQL Editor"
  # The editor. This area is used to create/save/load and execute sql statements.
