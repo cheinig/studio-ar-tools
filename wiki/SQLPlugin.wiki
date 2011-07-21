@@ -4,7 +4,7 @@
 The SQL plugin provides a small and simple SQL editor. This editor send SQL commands to the connected AR server which execute the statement on the database in the context of the AR server. No direct connection to the DBMS is necessary.<br />
 To open a SQL editor window, you select the correct servername from the DevStudio navigator and use the SQL Editor button in the toolbar. The opened SQL editor window is related to the previously selected servername (the servername is shown at the top of the editor window) and send all SQL commands to this server.
 
-[[File:sqleditor.gif|thumb|700px|center|SQL Editor]]
+http://studio-ar-tools.googlecode.com/svn/trunk/wiki/images/sqlplugin_sqleditor.gif
 
 Figure "SQL Editor"
  # The editor. This area is used to create/save/load and execute sql statements.
@@ -26,7 +26,7 @@ Further enhancements are implemented which are described within the following te
 The SQL Editor plugin loads all available form names of the related server which have a database view name. These formnames will be showed in a list on the right. <br />
 If the list is fully loaded, you can insert the DB view name of the form into the editor area, by double click the form name entry. The view name will be copied to the current cursor position and will overwrite marked text.
 
-[[File:sqleditor_formlist.gif|center|thumb|700px|function of the formlist]]
+http://studio-ar-tools.googlecode.com/svn/trunk/wiki/images/sqlplugin_formlist.gif
 
 ==Scripting Support==
 To help writing and handling multiple sql statements in one editor window, the SQL editor supports scripting. More than one statement can be written and only one of can be executed.<br />
@@ -66,10 +66,11 @@ _*select `*` from user_x*_; -- line comment</font>
 Both unfiltered sql text areas are marked with a font color. The filtered sql statements are marked bold+italic. For example, if the cursor is placed within the blue area, the statement "select `*` from arschema" will be executed.
 
 ==Output==
-[[File:sqleditor_ausgabe.gif|right|thumb|300px|output area of the sql editor]]
 
 If the executed sql command returns a result, it will be printed as a table at the bottom of the editor window. The execution time of the sql statement will be displayed at the top of the output area.<br />
 The "Stop" button on the top of the output area stops the current running execution and the GUI will be reactivated to execute another command.
+
+http://studio-ar-tools.googlecode.com/svn/trunk/wiki/images/sqlplugin_output.gif
 
 *Note:*
 It is possible to stop running sql commands, but only the GUI will reset, so a new statement can be executed and no output of the previous statment will be written to the result table. The sql call to the server will not be cancelled.
