@@ -22,13 +22,13 @@ You are logged in to "Server 1" and "Server 2", which are displayed in the AR Na
 ==Escalation Times==
 To show escalation times you can use the "Timetable View" with the "Reload Escalation Table" function. This function use the reporting modul from the reporting plugin to load the time data. For a complete description of the output you can see [ReportingPlugin].
 
-[[File:Timetable_view_eskalation.gif|thumb|700px|center|Timetable View (escalation)]]
+http://studio-ar-tools.googlecode.com/svn/wiki/images/timetableplugin_escalation.gif
 
 A double click on a table entry will open the corresponding escalation in the escalation editor.
 
 ==Archiving Times==
 To show archiving times you can use the "Timetable View" with the "Reload Archive Table" function. This function use the reporting modul from the reporting plugin to load all forms with their archiving time data (if available). For a complete description of the output you can see [ReportingPlugin].
 
-[[File:Timetable_view_archive.gif|thumb|700px|center|Timetable View (Archiv)]]
+http://studio-ar-tools.googlecode.com/svn/wiki/images/timetableplugin_archive.gif
 
 A double click on a table entry will open the corresponding form in the form editor.
