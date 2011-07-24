@@ -1,6 +1,6 @@
 #summary Sidebar
 
-=StART Wiki=
+
  * [Welcome Welcome]
  * [Installation Installation]
  * User Guide
