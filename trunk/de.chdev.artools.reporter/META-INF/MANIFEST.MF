@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: StART Reporting
 Bundle-SymbolicName: de.chdev.artools.reporter;singleton:=true
-Bundle-Version: 0.3.3.qualifier
+Bundle-Version: 0.4.0.qualifier
 Bundle-Activator: de.chdev.artools.reporter.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
