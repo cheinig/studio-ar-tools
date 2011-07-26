@@ -713,6 +713,8 @@ public class SQLEditor extends TextEditor {
 				// set column label
 				if (header != null && header.length > i) {
 					oldColumns[i].setText(header[i]);
+				} else {
+					oldColumns[i].setText("Column "+(i+1));
 				}
 			}
 
@@ -1073,7 +1075,13 @@ public class SQLEditor extends TextEditor {
 				if (monitor.isCanceled())
 					return Status.CANCEL_STATUS;
 				// timestamp = System.currentTimeMillis();
-				header = getInput().getSQLStatementHeader(getStatement());
+				// Catch any errors and set default headers
+				try {
+					header = getInput().getSQLStatementHeader(getStatement());
+				} catch (Exception e){
+					e.printStackTrace();
+					header = null;
+				}
 				// timestamp = System.currentTimeMillis() - timestamp;
 				// System.out
 				// .println("Fetched header in " + timestamp + " ms");
