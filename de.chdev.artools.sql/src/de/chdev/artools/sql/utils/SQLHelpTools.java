@@ -305,10 +305,12 @@ public class SQLHelpTools {
 				tokenSubList.remove(0);
 
 				// Loop until
+				// * end of string
 				// * next column header (,)
 				// * table definition (from keyword)
 				// * column alias definition (AS keyword)
-				while (!tokenSubList.get(0).getStr().equalsIgnoreCase("from")
+				while (tokenSubList.size()>0 
+						&& !tokenSubList.get(0).getStr().equalsIgnoreCase("from")
 						&& !tokenSubList.get(0).getStr().equalsIgnoreCase(",")
 						&& !tokenSubList.get(0).getStr().equalsIgnoreCase("AS")) {
 					// Check column function and add token until function ends
@@ -331,6 +333,12 @@ public class SQLHelpTools {
 					// stack
 					tokenString = tokenString + tokenSubList.get(0).getStr();
 					tokenSubList.remove(0);
+				}
+				
+				// Skip further process if end of statement reached
+				if (tokenSubList.size()<=0){
+					headerInformation.add(tokenString);
+					continue;
 				}
 
 				// Add header information if no column alias is defined
