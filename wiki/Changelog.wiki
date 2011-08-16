@@ -1,0 +1,12 @@
+#summary Change history of StART.
+#labels Phase-Implementation
+
+=Changelog=
+
+----
+*Version 0.4*
+ * multilanguage support
+ * supported languages english/german
+ * fixed exception during sql call (issue 1)
+ * some bug fixes
+----
