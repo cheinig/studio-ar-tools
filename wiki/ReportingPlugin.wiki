@@ -113,3 +113,16 @@ Example output of the CSV exporter when using the packinglist reporter:
 "*test_submit1";"Filter Guide"
 "*test_submit2";"Filter Guide"
 </code>
+
+=== Clipboard Exporter (Text) ===
+The clipboard exporter copies the text content of the result to the clipboard. Each value in one column will have the wide of the longest value. Shorter values will be filled with blanks. This will result in a table structure within a text file.
+
+Example:
+<pre>
+Name         Type
+*test         Form
+*test         Active Link
+*test_submit  Filter
+*test_submit1 Filter Guide
+*test_submit2 Filter Guide
+</pre>
