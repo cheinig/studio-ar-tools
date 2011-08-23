@@ -182,7 +182,7 @@ public class LogaEditorInput implements IEditorInput {
 			char[] buffer = new char[1000000];
 			int readCounter;
 			while ((readCounter=reader.read(buffer))>=0){
-				text.append(buffer);
+				text.append(buffer, 0, readCounter);
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
