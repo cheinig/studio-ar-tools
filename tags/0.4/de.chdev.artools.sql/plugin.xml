@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.chdev.artools.sql.editor.SQLEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            default="false"
+            extensions="sql"
+            icon="icons/taskbar-icon-16x16.png"
+            id="de.chdev.artools.sql.editor.sql"
+            name="SQL Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="de.chdev.artools.toolbar">
+            <command
+                  commandId="de.chdev.artools.sql.command.opensqleditor"
+                  icon="icons/taskbar-icon-16x16.png"
+                  label="Open SQL Editor"
+                  style="push">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="de.chdev.artools.sql.handler.OpenSQLEditorHandler"
+            id="de.chdev.artools.sql.command.opensqleditor"
+            name="Open SQL Editor">
+      </command>
+      <command
+            defaultHandler="de.chdev.artools.sql.handler.ResultCopyHandler"
+            description="Copy the value from the selected cell"
+            id="de.chdev.artools.sql.resultCopyCommand"
+            name="Copy Value">
+      </command>
+      <command
+            defaultHandler="de.chdev.artools.sql.handler.ResultCutHandler"
+            description="Cuts the value from the selected cell"
+            id="de.chdev.artools.sql.resultCutCommand"
+            name="Cut Value">
+      </command>
+      <command
+            defaultHandler="de.chdev.artools.sql.handler.ResultPasteHandler"
+            description="Pastes the clipboard value to selected cell"
+            id="de.chdev.artools.sql.resultPasteCommand"
+            name="Paste Value">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.chdev.artools.sql.resultCopyCommand"
+            contextId="de.chdev.artools.sql.resultContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+C">
+      </key>
+      <key
+            commandId="de.chdev.artools.sql.resultCutCommand"
+            contextId="de.chdev.artools.sql.resultContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+X">
+      </key>
+      <key
+            commandId="de.chdev.artools.sql.resultPasteCommand"
+            contextId="de.chdev.artools.sql.resultContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+V">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            description="Context of the result area"
+            id="de.chdev.artools.sql.resultContext"
+            name="Result Context"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
+   </extension>
+
+</plugin>
