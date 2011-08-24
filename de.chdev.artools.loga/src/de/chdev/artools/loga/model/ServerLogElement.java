@@ -16,9 +16,9 @@
 
 package de.chdev.artools.loga.model;
 public class ServerLogElement extends LogElement{
-	protected long startTimestamp;
-
-	protected long endTimestamp;
+//	protected Long startTimestamp;
+//
+//	protected Long endTimestamp;
 
 	protected String threadId;
 
@@ -28,7 +28,7 @@ public class ServerLogElement extends LogElement{
 
 	protected String user;
 
-	public long getStartTimestamp() {
+	public Long getStartTimestamp() {
 		return startTimestamp;
 	}
 
@@ -36,7 +36,7 @@ public class ServerLogElement extends LogElement{
 		this.startTimestamp = startTimestamp;
 	}
 
-	public long getEndTimestamp() {
+	public Long getEndTimestamp() {
 		return endTimestamp;
 	}
 

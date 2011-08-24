@@ -16,9 +16,9 @@
 
 package de.chdev.artools.loga.model;
 public class ControlLogElement extends LogElement{
-	protected Long startTimestamp;
-
-	protected Long endTimestamp;
+//	protected Long startTimestamp;
+//
+//	protected Long endTimestamp;
 
 	protected String operationType;
 
