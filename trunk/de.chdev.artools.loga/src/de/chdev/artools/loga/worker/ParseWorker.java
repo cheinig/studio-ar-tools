@@ -12,7 +12,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
+ */
 
 package de.chdev.artools.loga.worker;
 
@@ -24,15 +24,18 @@ import java.io.Reader;
 import java.util.Map;
 
 import de.chdev.artools.loga.controller.ILogController;
+import de.chdev.artools.loga.controller.MainController;
 
 public class ParseWorker {
 
 	private Reader reader;
 	private Map<String, ILogController> controllerMap;
+	private final MainController mainController;
 
-	public ParseWorker(Reader reader, Map<String, ILogController> controllerMap) {
+	public ParseWorker(Reader reader, MainController mainController) {
 		this.reader = reader;
-		this.controllerMap = controllerMap;
+		this.mainController = mainController;
+		this.controllerMap = mainController.getControllerMap();
 	}
 
 	public void run() {
@@ -74,7 +77,12 @@ public class ParseWorker {
 				// Read new line
 				line = bufReader.readLine();
 				lineNumber++;
+
 			}
+
+			// Run post processing of the calculated hierarchy
+			mainController.runPostProcessing();
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,9 +91,9 @@ public class ParseWorker {
 
 	private int chooseController(String logType, String line, int lineNumber) {
 		int result = -1;
-		if (controllerMap.containsKey(logType)){
+		if (controllerMap.containsKey(logType)) {
 			result = controllerMap.get(logType).setLogLine(line, lineNumber);
-		}		
+		}
 		return result;
 	}
 }

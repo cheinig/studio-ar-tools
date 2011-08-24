@@ -309,7 +309,7 @@ public class LogaEditor extends MultiPageEditorPart implements IResourceChangeLi
 			controllerMap.put(EsclController.PREFIX, esclController);
 
 			Reader reader = new StringReader(((LogaEditorInput)getEditorInput()).getFileText());
-			ParseWorker parser = new ParseWorker(reader,controllerMap);
+			ParseWorker parser = new ParseWorker(reader,mainController);
 			parser.run();
 			
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable(){

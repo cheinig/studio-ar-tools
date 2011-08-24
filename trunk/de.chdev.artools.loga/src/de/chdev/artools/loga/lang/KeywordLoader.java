@@ -12,7 +12,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
+ */
 
 package de.chdev.artools.loga.lang;
 
@@ -60,47 +60,53 @@ public class KeywordLoader {
 
 	private static KeywordLoader instance;
 	private static List<String> supportedLanguages = new ArrayList<String>();
-	//	private static CompositeConfiguration configuration;
+	// private static CompositeConfiguration configuration;
 	private static Map<String, Configuration> localKeywords = new HashMap<String, Configuration>();
 	private static Map<String, Configuration> nameConfigMap = new HashMap<String, Configuration>();
-
-
-	private KeywordLoader(){
-		
-	}
 	
-	public static Configuration getConfiguration(String prefix){
+	// The default language configuration as fallback
+	private static Configuration defaultConfig = null;
+	// The client language identified by rules
+	private static Configuration autoClientConfig = null;
+	// The server language identified by rules
+	private static Configuration autoServerConfig = null;
+
+	private KeywordLoader() {
+
+	}
+
+	public static Configuration getConfiguration(String prefix) {
 		return instance.localKeywords.get(prefix);
 	}
-	
-	public static void initialize(Reader reader){
+
+	public static void initialize(Reader reader) {
 		instance = new KeywordLoader();
 		instance.buildLocalKeywordMap(reader);
 	}
-	
-//	private static Configuration load() {
-//		if (configuration == null) {
-//			try {
-//				configuration = new CompositeConfiguration();
-//
-//				PropertiesConfiguration keywords_de = new PropertiesConfiguration(
-//						"config/keywords_de.properties");
-//				configuration.addConfiguration(keywords_de);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		return configuration;
-//	}
+
+	// private static Configuration load() {
+	// if (configuration == null) {
+	// try {
+	// configuration = new CompositeConfiguration();
+	//
+	// PropertiesConfiguration keywords_de = new PropertiesConfiguration(
+	// "config/keywords_de.properties");
+	// configuration.addConfiguration(keywords_de);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	//
+	// return configuration;
+	// }
 
 	private List<Configuration> getAllConfigurations() {
 		List<Configuration> localConfigurationList = new ArrayList<Configuration>();
 		try {
-//			File path = new File("./config");
-			
-//			File[] listFiles = path.listFiles();
-			
+			// File path = new File("./config");
+
+			// File[] listFiles = path.listFiles();
+
 			FilenameFilter filter = new FilenameFilter() {
 
 				@Override
@@ -113,45 +119,51 @@ public class KeywordLoader {
 				}
 
 			};
-			
+
 			/* TESTCODE */
-//			Bundle location = Activator.getDefault().getBundle();
-//			Enumeration entryPaths = Activator.getDefault().getBundle().getEntryPaths("/");
-			URL configEntry = Activator.getDefault().getBundle().getEntry("config");
-			URL configPath = FileLocator.resolve (configEntry);
+			// Bundle location = Activator.getDefault().getBundle();
+			// Enumeration entryPaths =
+			// Activator.getDefault().getBundle().getEntryPaths("/");
+			URL configEntry = Activator.getDefault().getBundle()
+					.getEntry("config");
+			URL configPath = FileLocator.resolve(configEntry);
 			File path = new File(configPath.getFile());
-//			String[] list2 = resFile.list();
-//			File file = new ConfigurationScope().getLocation().toFile();
-//			String[] list = file.list();
-//			IProject project = root.getProject();
-//			IFolder files = project.getFolder("");
-//			IResource[] members = files.members();
+			// String[] list2 = resFile.list();
+			// File file = new ConfigurationScope().getLocation().toFile();
+			// String[] list = file.list();
+			// IProject project = root.getProject();
+			// IFolder files = project.getFolder("");
+			// IResource[] members = files.members();
 			/* TESTCODE END */
 
 			String[] fileNames = path.list(filter);
 			supportedLanguages.clear();
-			
+
 			for (String fileName : fileNames) {
 				File fileObj = new File(path, fileName);
 				CompositeConfiguration configuration = new CompositeConfiguration();
 
-				PropertiesConfiguration keywords = new PropertiesConfiguration(fileObj);
+				PropertiesConfiguration keywords = new PropertiesConfiguration(
+						fileObj);
 				configuration.addConfiguration(keywords);
 				configuration.addProperty("filename", fileName);
 				localConfigurationList.add(configuration);
-				supportedLanguages.add(configuration.getString("language.name"));
-				nameConfigMap.put(configuration.getString("language.name"), configuration);
+				supportedLanguages
+						.add(configuration.getString("language.name"));
+				nameConfigMap.put(configuration.getString("language.name"),
+						configuration);
 			}
 
-//			for (String fileName : fileNames) {
-//				CompositeConfiguration configuration = new CompositeConfiguration();
-//
-//				PropertiesConfiguration keywords = new PropertiesConfiguration(
-//						"config/" + fileName);
-//				configuration.addConfiguration(keywords);
-//				configuration.addProperty("filename", fileName);
-//				localConfigurationList.add(configuration);
-//			}
+			// for (String fileName : fileNames) {
+			// CompositeConfiguration configuration = new
+			// CompositeConfiguration();
+			//
+			// PropertiesConfiguration keywords = new PropertiesConfiguration(
+			// "config/" + fileName);
+			// configuration.addConfiguration(keywords);
+			// configuration.addProperty("filename", fileName);
+			// localConfigurationList.add(configuration);
+			// }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -159,13 +171,17 @@ public class KeywordLoader {
 	}
 
 	private void buildLocalKeywordMap(Reader reader) {
-		
+
 		String defaultLang = "EN";
-		Configuration defaultConfig = null;
+		
+		// Reset configuration values
+		defaultConfig = null;
+		autoClientConfig = null;
+		autoServerConfig = null;
 
 		Configuration clientConfig = null;
 		Configuration serverConfig = null;
-		
+
 		// Open and input and output stream
 		try {
 			BufferedReader in = new BufferedReader(reader);
@@ -182,21 +198,24 @@ public class KeywordLoader {
 				patternTypeMap.put(pClient, "client");
 				patternConfMap.put(pServer, conf);
 				patternTypeMap.put(pServer, "server");
-				
+
 				// Set default configuration
-				if (conf.getString("language.locale").equalsIgnoreCase(defaultLang)){
-					defaultConfig=conf;
+				if (conf.getString("language.locale").equalsIgnoreCase(
+						defaultLang)) {
+					defaultConfig = conf;
 				}
 			}
 			String aLine = null;
-			while ((aLine = in.readLine()) != null && (clientConfig==null || serverConfig==null)) {
+			while ((aLine = in.readLine()) != null
+					&& (clientConfig == null || serverConfig == null)) {
 				for (Pattern pattern : patternConfMap.keySet()) {
 					Matcher matcher = pattern.matcher(aLine);
-					if (matcher.matches()){
-						if (patternTypeMap.get(pattern).equals("client") && clientConfig==null){
+					if (matcher.matches()) {
+						if (patternTypeMap.get(pattern).equals("client")
+								&& clientConfig == null) {
 							clientConfig = patternConfMap.get(pattern);
-						} 
-						else if (patternTypeMap.get(pattern).equals("server") && serverConfig==null){
+						} else if (patternTypeMap.get(pattern).equals("server")
+								&& serverConfig == null) {
 							serverConfig = patternConfMap.get(pattern);
 						}
 					}
@@ -210,28 +229,32 @@ public class KeywordLoader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		// Create local config mapping
-		if (clientConfig==null && serverConfig==null){
-			if (defaultConfig == null){
-			throw new RuntimeException(){
 
-				/**
+		// Create local config mapping
+		if (clientConfig == null && serverConfig == null) {
+			if (defaultConfig == null) {
+				throw new RuntimeException() {
+
+					/**
 				 * 
 				 */
-				private static final long serialVersionUID = 1L;
-				
-			};
+					private static final long serialVersionUID = 1L;
+
+				};
 			} else {
 				clientConfig = defaultConfig;
 				serverConfig = defaultConfig;
 			}
-		} else if (clientConfig == null){
+		} else if (clientConfig == null) {
 			clientConfig = serverConfig;
-		} else if (serverConfig == null){
+		} else if (serverConfig == null) {
 			serverConfig = clientConfig;
 		}
-		
+
+		// Save current configuration for later restore
+		autoClientConfig = clientConfig;
+		autoServerConfig = serverConfig;
+
 		localKeywords.put(ActlController.PREFIX, clientConfig);
 		localKeywords.put(WflgController.PREFIX, clientConfig);
 		localKeywords.put(ApiController.PREFIX, serverConfig);
@@ -243,16 +266,35 @@ public class KeywordLoader {
 	public static List<String> getSupportedLanguages() {
 		return supportedLanguages;
 	}
-	
-	public static void setClientLanguage(String langName){
-		localKeywords.put(ActlController.PREFIX, nameConfigMap.get(langName));
-		localKeywords.put(WflgController.PREFIX, nameConfigMap.get(langName));
+
+	public static void setClientLanguage(String langName) {
+		if (nameConfigMap.containsKey(langName)) {
+			localKeywords.put(ActlController.PREFIX,
+					nameConfigMap.get(langName));
+			localKeywords.put(WflgController.PREFIX,
+					nameConfigMap.get(langName));
+		} else {
+			localKeywords.put(ActlController.PREFIX, autoClientConfig);
+			localKeywords.put(WflgController.PREFIX, autoClientConfig);
+		}
 	}
-	
-	public static void setServerLanguage(String langName){
-		localKeywords.put(ApiController.PREFIX, nameConfigMap.get(langName));
-		localKeywords.put(SqlController.PREFIX, nameConfigMap.get(langName));
-		localKeywords.put(FltrController.PREFIX, nameConfigMap.get(langName));
-		localKeywords.put(EsclController.PREFIX, nameConfigMap.get(langName));
+
+	public static void setServerLanguage(String langName) {
+
+		if (nameConfigMap.containsKey(langName)) {
+			localKeywords
+					.put(ApiController.PREFIX, nameConfigMap.get(langName));
+			localKeywords
+					.put(SqlController.PREFIX, nameConfigMap.get(langName));
+			localKeywords.put(FltrController.PREFIX,
+					nameConfigMap.get(langName));
+			localKeywords.put(EsclController.PREFIX,
+					nameConfigMap.get(langName));
+		} else {
+			localKeywords.put(ApiController.PREFIX, autoServerConfig);
+			localKeywords.put(SqlController.PREFIX, autoServerConfig);
+			localKeywords.put(FltrController.PREFIX, autoServerConfig);
+			localKeywords.put(EsclController.PREFIX, autoServerConfig);
+		}
 	}
 }

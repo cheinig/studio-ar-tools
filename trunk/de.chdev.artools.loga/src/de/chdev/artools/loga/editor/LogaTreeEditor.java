@@ -175,8 +175,8 @@ public class LogaTreeEditor extends EditorPart{
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				boolean reload = MessageDialog.openQuestion(null, "Rebuild tree", "Should the current log tree rebuild with the new language setting?");
+				KeywordLoader.setClientLanguage(((Combo)e.getSource()).getText());
 				if (reload==true){
-					KeywordLoader.setClientLanguage(((Combo)e.getSource()).getText());
 					Job treeJob = new BuildTreeJob("Rebuild tree with new language");
 					treeJob.schedule();
 				}
@@ -196,8 +196,8 @@ public class LogaTreeEditor extends EditorPart{
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				boolean reload = MessageDialog.openQuestion(null, "Rebuild tree", "Should the current log tree rebuild with the new language setting?");
+				KeywordLoader.setServerLanguage(((Combo)e.getSource()).getText());
 				if (reload==true){
-					KeywordLoader.setServerLanguage(((Combo)e.getSource()).getText());
 					Job treeJob = new BuildTreeJob("Rebuild tree with new language");
 					treeJob.schedule();
 				}
@@ -302,7 +302,7 @@ public class LogaTreeEditor extends EditorPart{
 				controllerMap.put(EsclController.PREFIX, esclController);
 
 			Reader reader = new StringReader(((LogaEditorInput)getEditorInput()).getFileText());
-			ParseWorker parser = new ParseWorker(reader,controllerMap);
+			ParseWorker parser = new ParseWorker(reader,mainController);
 			parser.run();
 
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable(){

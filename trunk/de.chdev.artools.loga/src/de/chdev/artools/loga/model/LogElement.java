@@ -35,6 +35,10 @@ public class LogElement{
 	}
 
 	public void setParentLogElement(LogElement parentLogElement) {
+		// remove this log element from the child list of the old parent log element
+		if (this.parentLogElement!=null){
+			this.parentLogElement.removeChildLogElement(this);
+		}
 		this.parentLogElement = parentLogElement;
 		if (parentLogElement != null)
 			parentLogElement.addChildLogElement(this);
@@ -44,6 +48,12 @@ public class LogElement{
 		childLogElements.add(childLogElement);
 	}
 	
+	protected void removeChildLogElement(LogElement childLogElement){
+		if (childLogElements.contains(childLogElement)){
+			childLogElements.remove(childLogElement);
+		}
+	}
+
 	public ArrayList<LogElement> getChildLogElementList(){
 		return childLogElements;
 	}

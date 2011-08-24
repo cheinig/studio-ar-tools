@@ -43,18 +43,18 @@ public class LogTreeLabelProvider extends LabelProvider implements ITableLabelPr
 			startTimestamp = ((ServerLogElement) element).getStartTimestamp();
 			endTimestamp = ((ServerLogElement) element).getEndTimestamp();
 			if (startTimestamp!=null && endTimestamp != null){
-				duration=(endTimestamp - startTimestamp) + " ms";
+				duration=(endTimestamp - startTimestamp)/10d + " ms";
 			}				
 		} else if (element instanceof ControlLogElement){
 			startTimestamp = ((ControlLogElement) element).getStartTimestamp();
 			endTimestamp = ((ControlLogElement) element).getEndTimestamp();
 			if (((ControlLogElement)element).getElementAlias().equalsIgnoreCase("ACTL")){
 				if (startTimestamp!=null && endTimestamp != null){
-					duration=(endTimestamp - startTimestamp)/1000 + " s";
+					duration=(endTimestamp - startTimestamp)/10d + " ms";
 				}
 			} else {
 				if (startTimestamp!=null && endTimestamp != null){
-					duration=(endTimestamp - startTimestamp) + " ms";
+					duration=(endTimestamp - startTimestamp)/10d + " ms";
 				}
 			}
 		}
