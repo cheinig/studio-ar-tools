@@ -33,7 +33,7 @@ public class MainController {
 	
 	// internal control vars
 	private LinkedList<LogElement> logElementList = new LinkedList<LogElement>();
-	private LinkedList<LogElement> callHierarchie = new LinkedList<LogElement>();
+	private LinkedList<LogElement> callHierarchy = new LinkedList<LogElement>();
 	
 	private HashMap<String, ILogController> controllerMap = new HashMap<String, ILogController>();
 
@@ -51,17 +51,17 @@ public class MainController {
 		
 	public void openNewLogElement(LogElement logElement){
 		getLogElementList().add(logElement);
-		callHierarchie.push(logElement);
+		callHierarchy.push(logElement);
 	}
 	
 	public void closeLastLogElement(){
-		callHierarchie.pop();
+		callHierarchy.pop();
 	}
 	
 	public LogElement getLastOpenLogElement(){
 		LogElement result = null;
 		
-		result = callHierarchie.peek();
+		result = callHierarchy.peek();
 		
 		return result;
 	}
@@ -114,7 +114,7 @@ public class MainController {
 	
 	public void clear(){
 		logElementList.clear();
-		callHierarchie.clear();
+		callHierarchy.clear();
 	}
 
 	public void setControllerMap(HashMap<String, ILogController> controllerMap) {
@@ -123,5 +123,10 @@ public class MainController {
 
 	public HashMap<String, ILogController> getControllerMap() {
 		return controllerMap;
+	}
+	
+	public void runPostProcessing(){
+		PostProcessing postProcessing = new PostProcessing();
+		postProcessing.correctHierarchy(logElementList, callHierarchy);
 	}
 }
