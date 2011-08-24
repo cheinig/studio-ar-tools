@@ -52,6 +52,26 @@ private MainController mainController;
 		
 		mainController.openNewLogElement(olElement);
 		
+		// Close all parent log elements until 
+		if (olElement.getName().equalsIgnoreCase("Close Windows")){
+			LogElement closeEvent = olElement;
+			LogElement topEvent = null;
+			// Go to the event above the close windows operation
+			while (closeEvent!=null && closeEvent.getElementType()!=null && closeEvent.getElementType()!=LogElementType.EVENT){
+				closeEvent = closeEvent.getParentLogElement();
+				mainController.closeLastLogElement();
+			}
+			// Go to the event above the close windows event or to root if no further events are available
+			if (closeEvent!=null){
+				topEvent = closeEvent.getParentLogElement();
+			}
+			while (topEvent!=null && topEvent.getElementType()!=null && topEvent.getElementType()!=LogElementType.EVENT){
+				topEvent = topEvent.getParentLogElement();
+				mainController.closeLastLogElement();
+			}
+
+		}
+		
 		return olElement;
 	}
 	

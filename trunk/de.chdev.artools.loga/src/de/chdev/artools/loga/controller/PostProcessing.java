@@ -1,61 +1,101 @@
+/*
+   Copyright 2011 Christoph Heinig
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 package de.chdev.artools.loga.controller;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import de.chdev.artools.loga.model.LogElement;
 import de.chdev.artools.loga.model.LogElementType;
 
+/**
+ * This class can be used to do modifications to the hierarchy after it is built.
+ * It will try to correct some information or fill missing values.
+ * Currently following optimizations are implemented:\n
+ * - Try to fill missing timestamps by child elements 
+ * 
+ */
 public class PostProcessing {
 
-	public void correctHierarchy(LinkedList<LogElement> logElementList, LinkedList<LogElement> callHierarchy){
+	/**
+	 * The method should be called only ONCE after the log hierarchy is build.
+	 * It will try to correct some information or fill missing values.
+	 * Currently following optimizations are implemented:\n
+	 * Try to fill missing timestamps by child elements 
+	 * 
+	 * @param logElementList The complete list of all log elements which should be corrected
+	 */
+	public void correctHierarchy(LinkedList<LogElement> logElementList){
 		// List all post processing actions
-		correctMissingCloseWindowEvents(logElementList, callHierarchy);
+		fillMissingTimestamps(logElementList);
+	}
+
+	/**
+	 * This method tries to fill missing timestamp values by the child elements
+	 * 
+	 * @param logElementList complete list of all log elements
+	 */
+	private void fillMissingTimestamps(LinkedList<LogElement> logElementList){
+		// Loop all log elements and calculate the timestamps
+		for (LogElement element : logElementList){
+			if (element.getParentLogElement()==null){
+				fillMissingTimestampsLoop(element);
+			}
+		}
 	}
 	
-	private void correctMissingCloseWindowEvents(LinkedList<LogElement> logElementList, LinkedList<LogElement> callHierarchy) {
-//		LinkedList<LogElement> openDialogElementList = new LinkedList<LogElement>();
-//		LogElement closeElement = null;
-		for (LogElement element : logElementList){
-//			// If element is an open dialog element, than put it on the stack
-//			if (element.getElementType() == LogElementType.OPERATION && element.getName().equalsIgnoreCase("Open Dialog")){
-//				openDialogElementList.push(element);
-//			}
-			// If a dialog is open a close condition will be searched
-			if (element.getElementType() == LogElementType.OPERATION && element.getName().equalsIgnoreCase("Close Windows")){
-				LogElement closeEvent = element;
-				LogElement topEvent = null;
-				// Search for the event above the close windows operation
-				while (closeEvent!=null && closeEvent.getElementType()!=null && closeEvent.getElementType()!=LogElementType.EVENT){
-					closeEvent = closeEvent.getParentLogElement();
+	/**
+	 * This method does the recursive loop to calculate the missing timestamps.
+	 * It will also calculate the timestamps for all child elements. 
+	 * If a timestamp is already set, the child elements will be calculated, but the original timestamps not replaced
+	 * 
+	 * @param element The element to calculate timestamps for
+	 * @return original LogElement which calculated timestamps 
+	 */
+	private LogElement fillMissingTimestampsLoop(LogElement element){
+
+		// If already timestamps are available, they should not be overwritten.
+		boolean modifyStartTimestamp = true;
+		boolean modifyEndTimestamp = true;
+		if (element.getStartTimestamp()!=null){
+			modifyStartTimestamp=false;
+		}
+		if (element.getEndTimestamp()!=null){
+			modifyEndTimestamp=false;
+		}
+		
+		// Loop all Child elements and start fill method recursive
+		ArrayList<LogElement> childLogElementList = element.getChildLogElementList();
+		if (childLogElementList!=null){
+			for (LogElement childElement : childLogElementList){
+				fillMissingTimestampsLoop(childElement);
+				
+				// If modify is allowed and start timestamp is empty or greater than the child start timestamp, than replace it
+				if (modifyStartTimestamp==true && (element.getStartTimestamp()==null || (childElement.getStartTimestamp()!=null && element.getStartTimestamp()>childElement.getStartTimestamp()))){
+					element.setStartTimestamp(childElement.getStartTimestamp());
 				}
-				// Search for the event above the close windows event
-				if (closeEvent!=null){
-					topEvent = closeEvent.getParentLogElement();
-				}
-				while (topEvent!=null && topEvent.getElementType()!=null && topEvent.getElementType()!=LogElementType.EVENT){
-					topEvent = topEvent.getParentLogElement();
-				}
-				//Search and correct hierarchy
-				for (LogElement moveElement : logElementList){
-					if (moveElement.getStartLineNumber()>element.getEndLineNumber() && moveElement.getParentLogElement()==closeEvent){
-						moveElement.setParentLogElement(topEvent);
-					}
+				// If modify is allowed and end timestamp is empty or smaller than the child end timestamp, than replace it
+				if (modifyEndTimestamp == true && (element.getEndTimestamp()==null || (childElement.getEndTimestamp()!=null && element.getEndTimestamp()<childElement.getEndTimestamp()))){
+					element.setEndTimestamp(childElement.getEndTimestamp());
 				}
 			}
-//			// If a close element is available, than pop following LogElements the level above the open dialog LogElement
-//			if (closeElement!=null && closeElement!=element){
-//				if (element.getParentLogElement()==closeElement.getParentLogElement()){
-//					
-//				}
-//				if (element.getParentLogElement()==openDialogElementList.peek()){
-//					
-//					element.setParentLogElement(openDialogElementList.peek().getParentLogElement());
-//				} else {
-//					closeElement=null;
-//					openDialogElementList.pop();
-//				}
-//			}
 		}
+		
+		return element;
 	}
 }

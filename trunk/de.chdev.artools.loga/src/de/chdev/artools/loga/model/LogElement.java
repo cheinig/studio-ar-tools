@@ -27,6 +27,10 @@ public class LogElement{
 	protected int startLineNumber;
 
 	protected int endLineNumber;
+	
+	protected Long startTimestamp;
+
+	protected Long endTimestamp;
 
 	protected String elementAlias;
 
@@ -112,6 +116,22 @@ public class LogElement{
 
 	public void setElementType(LogElementType elementType) {
 		this.elementType = elementType;
+	}
+
+	public Long getStartTimestamp() {
+		return startTimestamp;
+	}
+
+	public void setStartTimestamp(Long startTimestamp) {
+		this.startTimestamp = startTimestamp;
+	}
+
+	public Long getEndTimestamp() {
+		return endTimestamp;
+	}
+
+	public void setEndTimestamp(Long endTimestamp) {
+		this.endTimestamp = endTimestamp;
 	}
 
 	protected String text;

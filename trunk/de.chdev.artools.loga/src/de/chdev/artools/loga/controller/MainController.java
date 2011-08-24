@@ -127,6 +127,6 @@ public class MainController {
 	
 	public void runPostProcessing(){
 		PostProcessing postProcessing = new PostProcessing();
-		postProcessing.correctHierarchy(logElementList, callHierarchy);
+		postProcessing.correctHierarchy(logElementList);
 	}
 }
