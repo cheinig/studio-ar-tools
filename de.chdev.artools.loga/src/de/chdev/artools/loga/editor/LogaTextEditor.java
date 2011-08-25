@@ -30,4 +30,17 @@ public class LogaTextEditor extends TextEditor{
 		editor = this;
 	}
 	
+	/**
+	 * Set the first line of the document to the provided line number. The cursor will be set to the first position in this line.
+	 * @param lineNumber the linenumber to jump to
+	 */
+	public void gotoLine(int lineNumber){
+		// Set the top line
+		getSourceViewer().setTopIndex(lineNumber-1);
+		// Get offset index from the beginning of the document to the current line
+		int topIndexStartOffset = getSourceViewer().getTopIndexStartOffset();
+		// Set the cursor to the new  top line
+		getSourceViewer().setSelectedRange(topIndexStartOffset, 0);
+	}
+	
 }

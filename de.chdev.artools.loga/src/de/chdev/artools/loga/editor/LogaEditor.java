@@ -79,7 +79,7 @@ import de.chdev.artools.loga.worker.ParseWorker;
 public class LogaEditor extends MultiPageEditorPart implements IResourceChangeListener{
 
 	/** The text editor used in page 0. */
-	private TextEditor textEditor;
+	private LogaTextEditor textEditor;
 
 	/** The text editor used in page 0. */
 	private LogaTreeEditor treeEditor;
@@ -217,6 +217,16 @@ public class LogaEditor extends MultiPageEditorPart implements IResourceChangeLi
 		setActivePage(0);
 		IDE.gotoMarker(getEditor(0), marker);
 	}
+	
+	/**
+	 * The active page will be switched to the loga text editor and it will set the displayed line to the provided line number
+	 * @param lineNumber the line number to jump to
+	 */
+	public void gotoLine(int lineNumber){
+		setActivePage(0);
+		textEditor.gotoLine(lineNumber);
+	}
+	
 	/**
 	 * The <code>MultiPageEditorExample</code> implementation of this method
 	 * checks that the input is an instance of <code>IFileEditorInput</code>.
