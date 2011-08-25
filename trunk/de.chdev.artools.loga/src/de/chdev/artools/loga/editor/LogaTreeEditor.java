@@ -26,7 +26,15 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandAdapter;
 import org.eclipse.swt.events.ExpandEvent;
@@ -43,8 +51,11 @@ import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
@@ -59,6 +70,8 @@ import de.chdev.artools.loga.controller.OperationController;
 import de.chdev.artools.loga.controller.SqlController;
 import de.chdev.artools.loga.controller.WflgController;
 import de.chdev.artools.loga.gui.TreeComposite;
+import de.chdev.artools.loga.handler.TreeContextOpenAction;
+import de.chdev.artools.loga.handler.TreeContextToTextAction;
 import de.chdev.artools.loga.lang.KeywordLoader;
 import de.chdev.artools.loga.model.LogElement;
 import de.chdev.artools.loga.worker.ParseWorker;
@@ -229,6 +242,27 @@ public class LogaTreeEditor extends EditorPart{
 		initElement.setName("...loading...");
 		initList.add(initElement);
 		treeFrame.fillTable(initList);
+
+		// Create context menu for tree table
+		MenuManager popupMenuManager = new MenuManager();
+		IMenuListener listener = new IMenuListener() { 
+		public void menuAboutToShow(IMenuManager manager) { 
+		    TreeSelection selection = (TreeSelection)treeFrame.getTreeViewer().getSelection();
+		    if (selection != null && selection.getFirstElement() != null){
+		    	LogElement logElement = (LogElement)selection.getFirstElement();
+		    	manager.add(new TreeContextOpenAction(logElement));
+		    	manager.add(new TreeContextToTextAction(logElement, (LogaEditor)getSite().getPage().getActiveEditor()));
+		    }
+		    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS)); 
+		    } 
+		}; 
+		popupMenuManager.addMenuListener(listener); 
+		popupMenuManager.setRemoveAllWhenShown(true); 
+		Menu menu = popupMenuManager.createContextMenu(treeFrame.getTree());
+		treeFrame.getTree().setMenu(menu);
+		getSite().registerContextMenu("de.chdev.artools.loga.editor.treepopup", popupMenuManager, treeFrame.getTreeViewer());
+		getSite().setSelectionProvider(treeFrame.getTreeViewer());
+		
 		
 		return treeFrame;
 	}

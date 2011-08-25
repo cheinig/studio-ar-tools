@@ -46,22 +46,22 @@ public class TreeComposite extends Composite{
 		
 		super(parent, style);
 		this.setLayout(new FillLayout());
-		tree = new Tree(this,SWT.None);
-		tree.setHeaderVisible(true);
-		nameColumn = new TreeColumn(tree, SWT.NONE);
+		setTree(new Tree(this,SWT.None));
+		getTree().setHeaderVisible(true);
+		nameColumn = new TreeColumn(getTree(), SWT.NONE);
 	    nameColumn.setText("Name");
 	    nameColumn.setWidth(400);
-		lineColumn = new TreeColumn(tree, SWT.NONE);
+		lineColumn = new TreeColumn(getTree(), SWT.NONE);
 	    lineColumn.setText("Linenumber");
 	    lineColumn.setWidth(50);
-		timeColumn = new TreeColumn(tree, SWT.NONE);
+		timeColumn = new TreeColumn(getTree(), SWT.NONE);
 	    timeColumn.setText("Duration");
 	    timeColumn.setWidth(100);
-		tree.setVisible(true);
+		getTree().setVisible(true);
 		
-		treeViewer = new TreeViewer(tree);
-		treeViewer.setContentProvider(new LogTreeContentProvider());
-		treeViewer.setLabelProvider(new LogTreeLabelProvider());
+		setTreeViewer(new TreeViewer(getTree()));
+		getTreeViewer().setContentProvider(new LogTreeContentProvider());
+		getTreeViewer().setLabelProvider(new LogTreeLabelProvider());
 	}
 
 	public void fillTable(LinkedList<LogElement> logElementList){
@@ -117,7 +117,23 @@ public class TreeComposite extends Composite{
 //			}
 //		}
 		
-		treeViewer.setInput(logElementList);
-		treeViewer.refresh();
+		getTreeViewer().setInput(logElementList);
+		getTreeViewer().refresh();
+	}
+
+	public TreeViewer getTreeViewer() {
+		return treeViewer;
+	}
+
+	public void setTreeViewer(TreeViewer treeViewer) {
+		this.treeViewer = treeViewer;
+	}
+
+	public Tree getTree() {
+		return tree;
+	}
+
+	public void setTree(Tree tree) {
+		this.tree = tree;
 	}
 }
