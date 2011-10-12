@@ -369,10 +369,16 @@ public class FltrController implements ILogController{
 			// LogElement parent =
 			// MainController.getInstance().getLastOpenLogElement();
 			LogElement parent;
-			if (phaseString.equalsIgnoreCase("phase 2")) {
-				parent = eventCache.peek().getParentLogElement();
-			} else {
-				parent = eventCache.peek().getParentLogElement();
+			try {
+				if (phaseString.equalsIgnoreCase("phase 2")) {
+					parent = eventCache.peek().getParentLogElement();
+				} else {
+					parent = eventCache.peek().getParentLogElement();
+				}
+			} catch (NullPointerException npe){
+				parent = null;
+				System.out.println("Parent element not available");
+				npe.printStackTrace();
 			}
 
 			// Create event name
@@ -481,12 +487,17 @@ public class FltrController implements ILogController{
 				mainController.closeLastLogElement();
 				// Load last primary event
 				clElement = eventCache.peek();
-				if (clElement.isPhase2Available()==false && clElement.isPhase3Available()==false){
-					eventCache.pop();
-				} else if (clElement.isPhase3Available()==false && phaseString.equalsIgnoreCase("phase 2")){
-					eventCache.pop();
-				} else if (phaseString.equalsIgnoreCase("phase 3")){
-					eventCache.pop();
+				try {
+					if (clElement.isPhase2Available()==false && clElement.isPhase3Available()==false){
+						eventCache.pop();
+					} else if (clElement.isPhase3Available()==false && phaseString.equalsIgnoreCase("phase 2")){
+						eventCache.pop();
+					} else if (phaseString.equalsIgnoreCase("phase 3")){
+						eventCache.pop();
+					}
+				} catch (NullPointerException npe){
+					System.out.println("Parent event not available");
+					npe.printStackTrace();
 				}
 			} else {
 				System.out.println("Error during filter event close in line "
@@ -578,10 +589,15 @@ public class FltrController implements ILogController{
 			// LogElement parent =
 			// MainController.getInstance().getLastOpenLogElement();
 			ControlLogElement parent = eventCache.peek();
-			if (phaseString.equalsIgnoreCase("2")) {
-				parent.setPhase2Available(true);
-			} else if (phaseString.equals("3")){
-				parent.setPhase3Available(true);
+			try {
+				if (phaseString.equalsIgnoreCase("2")) {
+					parent.setPhase2Available(true);
+				} else if (phaseString.equals("3")){
+					parent.setPhase3Available(true);
+				}
+			} catch (NullPointerException npe) {
+				System.out.println("Parent event not available");
+				npe.printStackTrace();
 			}
 
 			return true;
