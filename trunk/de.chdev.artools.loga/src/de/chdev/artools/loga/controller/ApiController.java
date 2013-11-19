@@ -110,6 +110,8 @@ public class ApiController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0,temp.indexOf(">")+1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String timestampString = temp.substring(0,temp.indexOf("*/")+2);
 			temp = temp.substring(timestampString.length());
 			String apiText = temp;
@@ -159,6 +161,8 @@ public class ApiController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0,temp.indexOf(">")+1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String timestampString = temp.substring(0,temp.indexOf("*/")+2);
 			temp = temp.substring(timestampString.length());
 			String apiText = temp;

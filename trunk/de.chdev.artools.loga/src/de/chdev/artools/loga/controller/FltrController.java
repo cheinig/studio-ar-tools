@@ -171,6 +171,8 @@ public class FltrController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0, temp.indexOf(">") + 1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String timestampString = temp.substring(0, temp.indexOf("*/") + 2);
 			temp = temp.substring(timestampString.length());
 			String fltrText = temp.trim();
@@ -294,6 +296,8 @@ public class FltrController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0, temp.indexOf(">") + 1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String timestampString = temp.substring(0, temp.indexOf("*/") + 2);
 			temp = temp.substring(timestampString.length());
 			String phaseString = temp.substring(temp.indexOf("(") + 1,
@@ -355,6 +359,8 @@ public class FltrController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0, temp.indexOf(">") + 1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String timestampString = temp.substring(0, temp.indexOf("*/") + 2);
 			temp = temp.substring(timestampString.length());
 			String phaseString = temp.substring(temp.indexOf("(") + 1,
@@ -440,6 +446,8 @@ public class FltrController implements ILogController{
 				temp = temp.substring(clientRpc.length());
 				String user = temp.substring(0, temp.indexOf(">") + 1);
 				temp = temp.substring(user.length());
+				String overlay = temp.substring(0,temp.indexOf(">")+1);
+				temp = temp.substring(overlay.length());
 				String timestampString = temp.substring(0,
 						temp.indexOf("*/") + 2);
 				temp = temp.substring(timestampString.length());
@@ -469,6 +477,8 @@ public class FltrController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0, temp.indexOf(">") + 1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String timestampString = temp.substring(0, temp.indexOf("*/") + 2);
 			temp = temp.substring(timestampString.length());
 			String phaseString = temp.substring(temp.indexOf("(") + 1,
@@ -531,6 +541,8 @@ public class FltrController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0, temp.indexOf(">") + 1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String operationText = temp.trim();
 
 			if (operationText.length() > 3 && operationText.contains(":")) {
@@ -583,6 +595,8 @@ public class FltrController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0, temp.indexOf(">") + 1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String fltrText = temp.trim();
 			String phaseString = fltrText.substring(fltrText.length()-2,fltrText.length()-1);
 			
@@ -625,6 +639,8 @@ public class FltrController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0, temp.indexOf(">") + 1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			// String timestampString = temp.substring(0,temp.indexOf("*/")+2);
 			// temp = temp.substring(timestampString.length());
 			String fltrText = temp;
@@ -681,6 +697,8 @@ public class FltrController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0, temp.indexOf(">") + 1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String timestampString = temp.substring(0, temp.indexOf("*/") + 2);
 			temp = temp.substring(timestampString.length());
 			String fltrText = temp;
@@ -777,6 +795,8 @@ public class FltrController implements ILogController{
 			temp = temp.substring(clientRpc.length());
 			String user = temp.substring(0, temp.indexOf(">") + 1);
 			temp = temp.substring(user.length());
+			String overlay = temp.substring(0,temp.indexOf(">")+1);
+			temp = temp.substring(overlay.length());
 			String fltrText = temp.trim();
 			String nameWithEo = fltrText.substring(fltrText.indexOf(": ")+2);
 			String executionOrderText = "";
