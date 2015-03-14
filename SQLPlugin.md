@@ -1,0 +1,78 @@
+# SQL Editor #
+The SQL plugin provides a small and simple SQL editor. This editor send SQL commands to the connected AR server which execute the statement on the database in the context of the AR server. No direct connection to the DBMS is necessary.<br />
+To open a SQL editor window, you select the correct servername from the DevStudio navigator and use the SQL Editor button in the toolbar. The opened SQL editor window is related to the previously selected servername (the servername is shown at the top of the editor window) and send all SQL commands to this server.
+
+![http://studio-ar-tools.googlecode.com/svn/wiki/images/sqlplugin_sqleditor.gif](http://studio-ar-tools.googlecode.com/svn/wiki/images/sqlplugin_sqleditor.gif)
+
+Figure "SQL Editor"
+  1. The editor. This area is used to create/save/load and execute sql statements.
+  1. The formlist. For further details see [SQLPlugin#Formlist](SQLPlugin#Formlist.md)
+  1. The output area. This area shows the results of the executed sql command. For further details see [SQLPlugin#Output](SQLPlugin#Output.md).
+
+The SQL editor is a normal text editor with simple syntax highlighting for some keywords (select, from, ...). At the top of the editor window you can execute the current statement or see additional informations.
+  * Execute
+> > Mark the current sql statement and send it to the server. For further informations about the "current statement" see [SQLPlugin#Scripting\_Support](SQLPlugin#Scripting_Support.md)
+  * Server Connection
+> > This informations shows which AR server is related to the current editor window. It is not possible to change the related server at the moment.
+  * Load
+> > It is possible to load an external text file to the editor window, so you can use existing sql script files. <br />
+Note: To save a modified sql text to file the default save button (File->Save) is used.
+
+Further enhancements are implemented which are described within the following text.
+
+## Formlist ##
+The SQL Editor plugin loads all available form names of the related server which have a database view name. These formnames will be showed in a list on the right. <br />
+If the list is fully loaded, you can insert the DB view name of the form into the editor area, by double click the form name entry. The view name will be copied to the current cursor position and will overwrite marked text.
+
+![http://studio-ar-tools.googlecode.com/svn/wiki/images/sqlplugin_formlist.gif](http://studio-ar-tools.googlecode.com/svn/wiki/images/sqlplugin_formlist.gif)
+
+## Scripting Support ##
+To help writing and handling multiple sql statements in one editor window, the SQL editor supports scripting. More than one statement can be written and only one of can be executed.<br />
+To split the text within the editor window and execute a specific statement, some rules must be fulfilled which are described in the following chapters.
+
+### Selecting ###
+It is possible to select a special statement, or only part of it, which should be executed. If text is selected within the sql editor window, only the selected part will be sent to the AR server to execute. Statement splitting by the scripting support uses the same mechanism and marks the right statement automatically. After executing a sql statement, the executed statement will be marked selected.
+
+### Statement Splitting ###
+To use scripting support, two parts must be attended:
+  1. how to seperate sql statements
+  1. how to execute the needed statement
+
+**1)**
+To make statement splitting work a special EOS (end of statement) character is used. This special character is a semicolon followed by a line break. There can also be some characters between the semicolon and the line break e.g. for comments. A semicolon will always be interpreted as a EOS character if it is not within a comment or a string.<br />
+
+The following text marks are supported within the SQL text:
+  * sql text begin
+  * EOS (end of statement) character
+  * sql text end
+A sql statement is always selected from one mark to the next. Leading or trailing comments (introduced with "--" for a line comment or "/`*` `*`/" for a comment area) and whitespaces will be excluded, also the related EOS character.
+
+**2)**
+After we described how sql statements can be separated, here you can find how to select the right sql statement to execute. This selection is based on the current cursor position. To understand how it works, you should know how the statements are separated (always from one mark to the next). In this case the leading and trailing comments, whitespaces and EOS character are not excluded, so you have always text areas without spaces between. The current cursor position within the sql text will be calculated and the single statement within the current area will be executed.
+
+**Example:**
+
+---
+
+<font color='#0055FF'>
+/<code>*</code> this is a<br />
+comment area <code>*</code>/ <br />
+<i><b>select <code>*</code> from arschema</b></i>;</font><br />
+<font color='#00FF00'>
+......<br />
+<i><b>select <code>*</code> from user_x</b></i>; -- line comment</font>
+
+---
+
+
+Both unfiltered sql text areas are marked with a font color. The filtered sql statements are marked bold+italic. For example, if the cursor is placed within the blue area, the statement "select `*` from arschema" will be executed.
+
+## Output ##
+
+If the executed sql command returns a result, it will be printed as a table at the bottom of the editor window. The execution time of the sql statement will be displayed at the top of the output area.<br />
+The "Stop" button on the top of the output area stops the current running execution and the GUI will be reactivated to execute another command.
+
+![http://studio-ar-tools.googlecode.com/svn/wiki/images/sqlplugin_output.gif](http://studio-ar-tools.googlecode.com/svn/wiki/images/sqlplugin_output.gif)
+
+**Note:**
+It is possible to stop running sql commands, but only the GUI will reset, so a new statement can be executed and no output of the previous statment will be written to the result table. The sql call to the server will not be cancelled.

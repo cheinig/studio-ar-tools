@@ -1,0 +1,127 @@
+# Reporting Framework #
+The reporting plugin provides a generic framework to combine different "reporter" with different "exporter". A "reporter" generates an information matrix and the "exporter" create an output.
+To create a report output, the framework must be started within the StART toolbar. After this a server and reporter/exporter combination can be selected.
+
+![http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_framework.gif](http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_framework.gif)
+
+Description of the figure "using the reporting plugin"
+  1. Toolbar icon of the reporting plugin. Using this icon opens the report dialog.
+  1. The server drop down list contains all currently connected AR server. The currently selected server within the AR navigator will be used as default entry. Additionally an `<All>` element is available which gives the possibility to generate reports with different server.
+  1. The report type drop down list shows all available report types. The needed report type must be selected and the "load" button used. After this the "report object list" (see number 4) will be refreshed with additional configuration parameters for the reporter.
+  1. This table shows additional report configuration parameters which differs between the different report types. The selected configuration object will be used as input parameter for the reporter and controls the output. Some reporters support selecting multiple configuration objects at once.
+  1. The exporter controls how the report will be presented. The "screen" exporter is used as default exporter and shows the generated report within a table of a newly opened dialog. A different exporter (like CSV exporter) can be used to export the report to a file.
+  1. Use the OK button to start the report job.
+
+Within the following chapter the current implemented "reporter" and "exporter" will be described.
+
+## Reporter ##
+### Time Reporter ###
+The time reporter provides two configuration objects: Escalation and Archive<br />
+"**Escalation**" will list all escalations of the selected server with the related escalation time criteria.<br />
+Following values will be calculated:
+  * Name
+> > Name of the escalation
+  * Time
+> > Execution time of the escalation. This value can be empty if the escalation is started by an interval. If more than one execution time is available, they will concatenated from lowest to highest.
+  * Interval
+> > The interval how often the escalation will be executed. This value can be empty if the escalation is time controlled.
+  * Enabled
+> > Shows if the escalation is enabled or not (yes/no).
+  * Days
+> > This value shows the days when the escalation should be executed. It can contain the weekday (Mo, Tu, We, Th, Fr, Sa, Su) or calendar day (1,2,3,4,...). If all weekdays are active, string "Full Week" will be shown. If all days of a month are active, the string "All days" will be shown.
+
+![http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_timetable_escalation_result.gif](http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_timetable_escalation_result.gif)
+
+<br />
+"**Archive**" will list all forms of the selected server with the related archiving times.<br />
+Following values will be calculated:
+  * Name
+> > Name of the form
+  * Time
+> > Execution time of the archiving process.
+  * Interval
+> > Execution interval of the archiving process (not supported)
+  * Enabled
+> > Shows if archiving is enabled or not (yes/no).
+  * Days
+> > This value shows the days when the escalation should be executed. It can contain the weekday (Mo, Tu, We, Th, Fr, Sa, Su) or calendar day (1,2,3,4,...). If all weekdays are active, string "Full Week" will be shown. If all days of a month are active, the string "All days" will be shown.
+
+![http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_timetable_archive_result.gif](http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_timetable_archive_result.gif)
+
+### Packinglist Reporter ###
+
+The packinglist reporter provides a list of packing lists from the selected server. You can choose a packing list and export the output with the selected exporter. This can be helpful to create documentations with the content of packing lists.<br />
+The following output will be generated:
+  * Name
+> > Name of the Elements in the Packing List
+  * Type
+> > The type of the element, e.g. "Active Link", or "Filter".
+
+![http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_packinglist_result.gif](http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_packinglist_result.gif)
+
+### Form Compare Reporter ###
+The form compare reporter compares two or more forms and shows the difference between the fields of the forms. As configuration parameter the reporter provides all form of the selected server. The server option `<All>` can be used to get forms from all connected server and you can select 2 forms from different server. It is also possible to select more than two forms to compare, but you should select only equal forms to get useful output. Only fields which are marked as different will be returned from the reporter.<br />
+Following attributes will be compared on base of the field Id:
+  * Databasename
+> > Databasename of the field
+  * Datebasetype
+> > The database type of the field like "Character", or "Integer".
+  * Option
+> > The database option of the field (required, optional, display only)
+  * Permissions
+> > The configured field permissions.
+  * Limits
+> > The configured limits of the field like maximum field length of a character field. Also additional field informations will be compared like table column count, if the field is a table field. The data relates on the field type, so no complete description will be documented here.<br />
+Note: The attribute compare is implemented as a string compare of the field limits delivered by the API. See the AR API documentation for further details.
+
+![http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_formcompare_result.gif](http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_formcompare_result.gif)
+
+Some exporter, like the screen exporter, can mark output columns. The reporter set a difference marker on all attributes which are calculated as different. If a field id on one of the forms is not available, all attributes will be marked as different.
+
+**Example:**
+Description of figure "Example output of the Form Compare Reporter":
+The table header show us that the forms "`*`test" and "`*`test2" are compared. The related server name to an attribute value will be displayed in brackets after the form name. All columns are sorted by attribute, so at first all database names will be displayed of all compared forms and after that the database type and so on.
+The figures shows 3 different types of displayed differences.
+  * Line 1 shows a missing field in form "`*`test2" which is available in "`*`test". In this case every attribute field is marked as different. Empty values are marked with the string "n/a".
+  * Line 2 shows a difference between the database names and a different field limit (Length 255 != Length 254, not visible in this screenshot) in the fields with ID 536870923.
+  * Line 3 shows a difference between the database name and the field permissions of the field 536870924.
+
+The form compare reporter can also be used to show all fields of a form, which can be useful for documentation. To list all field you only have to start a field compare with only one form selected. All fields will be listed without difference marker. This can also be useful to find unused field ids.
+
+## Exporter ##
+An exporter is a generic function to handle the output of reporter data. The data will be structured (csv, tab separated, etc.) and provide it in file, screen or clipboard. All currently implemented exporters will be described in the following chapters.
+
+### Screen Exporter ###
+The screen exporter opens a new window with a single table where the reporter data will be displayed. If a reporter marks some values with notification markers, the table cells will contain small icons to show the notification (e.g. form compare reporter).<br />
+It is also possible to sent the received reporter data to another exporter. This is useful if you want to view the output before exporting to a file. If you want to use another exporter you must select the needed exporter (and filename if necessary) and export the data again.
+
+![http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_screen_result.gif](http://studio-ar-tools.googlecode.com/svn/wiki/images/reportingplugin_screen_result.gif)
+
+### CSV Exporter ###
+The CSV exporter writes the output of the reporter to the filesystem as CSV file. The destination path must be provided before the report is created (before pushing the button). <br />
+The current version writes ";" as a separator sign to be compatible with german MS Excel.
+
+Example output of the CSV exporter when using the packinglist reporter:
+
+```
+
+"Name";"Type"
+"*test";"Form"
+"*test";"Active Link"
+"*test_submit";"Filter"
+"*test_submit1";"Filter Guide"
+"*test_submit2";"Filter Guide"
+```
+
+### Clipboard Exporter (Text) ###
+The clipboard exporter copies the text content of the result to the clipboard. Each value in one column will have the wide of the longest value. Shorter values will be filled with blanks. This will result in a table structure within a text file.
+
+Example:
+<pre>
+Name         Type<br>
+*test         Form<br>
+*test         Active Link<br>
+*test_submit  Filter<br>
+*test_submit1 Filter Guide<br>
+*test_submit2 Filter Guide<br>
+</pre>
